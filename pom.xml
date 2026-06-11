@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>JavaVideoDWN</artifactId>
+    <artifactId>MediaDownloader</artifactId>
     <version>2.1.0.1-release</version>
 
     <build>
