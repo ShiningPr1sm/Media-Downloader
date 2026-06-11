@@ -1,4 +1,4 @@
-# Java Video Downloader 🎥⬇️
+# Media Downloader 🎥⬇️
 
 Java Video Downloader is a user-friendly Java application with a graphical interface for downloading videos from YouTube and other platforms. It automatically selects the best video and audio quality and merges them into a single file.
 
