@@ -1,28 +1,50 @@
 package ua.shiningpr1sm;
 
 import javax.swing.*;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Launcher {
     public static void main(String[] args) {
-        ConfigManager.initConfig();
+        try {
+            PrintStream log = new PrintStream(
+                    new java.io.FileOutputStream(
+                            System.getenv("APPDATA") + "\\ShiningPr1sm\\MediaDownloader\\app.log", true));
+            System.setOut(log);
+            System.setErr(log);
+            System.out.println("=== App started ===");
+        } catch (Exception ignored) {}
 
-        String currentVer = ConfigManager.getInternalVersion();
-        String latestVer = ConfigManager.getLatestVersion();
+        try {
+            System.out.println("Step 1: initConfig");
+            ConfigManager.initConfig();
 
-        if (latestVer != null && !latestVer.equals(currentVer)) {
-            try {
-                Path tempJar = Paths.get("MediaDownloader_new.jar");
-                ConfigManager.downloadNewVersion(tempJar);
-                restartAndApply(tempJar);
-                return;
-            } catch (Exception e) {
-                e.printStackTrace();
+            System.out.println("Step 2: getInternalVersion");
+            String currentVer = ConfigManager.getInternalVersion();
+
+            System.out.println("Step 3: getLatestVersion");
+            String latestVer = ConfigManager.getLatestVersion();
+
+            System.out.println("currentVer=" + currentVer + " latestVer=" + latestVer);
+
+            if (latestVer != null && !latestVer.equals(currentVer)) {
+                try {
+                    Path tempJar = Paths.get("MediaDownloader_new.jar");
+                    ConfigManager.downloadNewVersion(tempJar);
+                    restartAndApply(tempJar);
+                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        SwingUtilities.invokeLater(JavaVideoDownloader::new);
+            System.out.println("Step 4: launching UI");
+            SwingUtilities.invokeLater(JavaVideoDownloader::new);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void restartAndApply(Path tempJar) {

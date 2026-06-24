@@ -24,7 +24,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>YouTubeDownloader</mainClass>
+                                    <mainClass>Launcher</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -36,18 +36,12 @@
 
 
     <properties>
-        <maven.compiler.source>24</maven.compiler.source>
-        <maven.compiler.target>24</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>io.github.gaeqs</groupId>
-            <artifactId>JavaYoutubeDownloader</artifactId>
-            <version>LATEST</version>
-        </dependency>
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>

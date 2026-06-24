@@ -138,7 +138,7 @@ public class JavaVideoDownloader {
         frame.add(bottomPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
 
-        downloadButton.addActionListener(_ -> {
+        downloadButton.addActionListener(e -> {
             String input = textArea.getText().trim();
             System.out.println("Download button clicked. Input: '" + input + "'");
             if (input.isEmpty() || input.equals(textarea_placeholder)) {
@@ -184,10 +184,12 @@ public class JavaVideoDownloader {
                         System.out.println("Adding --remote-components ejs:github for YouTube challenge solving.");
 
                         switch (selectedFormat) {
-                            case "Video + Audio (best quality)":
+                            case "Video + Audio":
                                 command.add("-f");
-                                command.add("bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best[ext=mp4]/best");
+                                command.add("bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best");
                                 command.add("--merge-output-format");
+                                command.add("mp4");
+                                command.add("--remux-video");
                                 command.add("mp4");
                                 command.add("--ffmpeg-location");
                                 command.add(FFMPEG_EXE.getAbsolutePath());
@@ -197,15 +199,22 @@ public class JavaVideoDownloader {
                                     System.out.println("Adding --cookies-from-browser " + browser);
                                 }
                                 break;
-
-                            case "Video only (no audio)":
+                            case "Video only (muted)":
                                 command.add("-f");
-                                command.add("bestvideo[ext=mp4]/bestvideo/best[ext=mp4]/best");
+                                command.add("bestvideo[ext=mp4]/bestvideo/best");
+                                command.add("--remux-video");
+                                command.add("mp4");
+                                command.add("--ffmpeg-location");
+                                command.add(FFMPEG_EXE.getAbsolutePath());
+                                if (!browser.isEmpty() && !browser.equals("none")) {
+                                    command.add("--cookies-from-browser");
+                                    command.add(browser);
+                                    System.out.println("Adding --cookies-from-browser " + browser);
+                                }
                                 break;
-
                             case "Audio only (mp3)":
                                 command.add("-f");
-                                command.add("bestaudio/best[ext=mp4]/best");
+                                command.add("bestaudio/best");
                                 command.add("--extract-audio");
                                 command.add("--audio-format");
                                 command.add("mp3");
@@ -217,24 +226,14 @@ public class JavaVideoDownloader {
                                     System.out.println("Adding --cookies-from-browser " + browser);
                                 }
                                 break;
-
-                            case "Single file (no merge)":
-                                command.add("-f");
-                                command.add("best[ext=mp4]/best");
-                                if (!browser.isEmpty() && !browser.equals("none")) {
-                                    command.add("--cookies-from-browser");
-                                    command.add(browser);
-                                    System.out.println("Adding --cookies-from-browser " + browser);
-                                }
-                                break;
                         }
-
 
                         command.add("--impersonate");
                         command.add("chrome");
 
+                        String timeStamp = new java.text.SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new java.util.Date());
                         command.add("-o");
-                        command.add(downloadFolder[0].getAbsolutePath() + "/%(title)s.%(ext)s");
+                        command.add(downloadFolder[0].getAbsolutePath() + "/%(title)s_%(id)s_" + timeStamp + ".%(ext)s");
                         command.add(videoUrl);
 
                         System.out.println("Executing command: " + String.join(" ", command));
@@ -283,7 +282,7 @@ public class JavaVideoDownloader {
             }).start();
         });
 
-        thumbnailButton.addActionListener(_ -> {
+        thumbnailButton.addActionListener(e -> {
             String input = textArea.getText().trim();
             if (input.isEmpty() || input.equals(textarea_placeholder)) {
                 JOptionPane.showMessageDialog(frame, "Please enter at least one video URL!");
@@ -327,8 +326,10 @@ public class JavaVideoDownloader {
                             command.add("--cookies-from-browser");
                             command.add(browser);
                         }
+
+                        String timeStamp = new java.text.SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new java.util.Date());
                         command.add("-o");
-                        command.add(downloadFolder[0].getAbsolutePath() + "/%(title)s.%(ext)s");
+                        command.add(downloadFolder[0].getAbsolutePath() + "/%(title)s_%(id)s_" + timeStamp + ".%(ext)s");
                         command.add(videoUrl);
 
                         System.out.println("Executing thumbnail command: " + String.join(" ", command));
