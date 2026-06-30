@@ -17,7 +17,7 @@ public class Launcher {
 
                 showUpdateDialog(currentVer, latestVer, releaseNotes);
 
-                Path tempJar = Paths.get("TestField_new.jar");
+                Path tempJar = Paths.get("MediaDownloader_new.jar");
                 ConfigManager.downloadNewVersion(tempJar);
                 restartAndApply(tempJar);
                 return;
