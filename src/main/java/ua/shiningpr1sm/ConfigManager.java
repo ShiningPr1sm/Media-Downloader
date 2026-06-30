@@ -70,15 +70,26 @@ public class ConfigManager {
 
     public static String getInternalVersion() {
         Properties props = new Properties();
-        try (InputStream is = ConfigManager.class.getResourceAsStream("/project.properties")) {
+        InputStream is = ConfigManager.class.getResourceAsStream("/project.properties");
+        if (is == null) {
+            is = Thread.currentThread().getContextClassLoader().getResourceAsStream("project.properties");
+        }
+        if (is == null) {
+            is = ClassLoader.getSystemResourceAsStream("project.properties");
+        }
+
+        try {
             if (is != null) {
-                props.load(is);
-                return props.getProperty("app.version");
+                try (InputStream input = is) {
+                    props.load(input);
+                    String version = props.getProperty("app.version");
+                    if (version != null) return version.trim();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "1.0.0";
+        return "UNKNOWN_VERSION";
     }
 
     public static String getLatestReleaseNotes() {
