@@ -1,5 +1,8 @@
 package ua.shiningpr1sm;
 
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+
 import java.io.*;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -76,5 +79,35 @@ public class ConfigManager {
             e.printStackTrace();
         }
         return "1.0.0";
+    }
+
+    public static String getLatestReleaseNotes() {
+        String apiUrl = "https://api.github.com/repos/ShiningPr1sm/media-downloader/releases/latest";
+        try {
+            HttpClient client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(apiUrl))
+                    .header("Accept", "application/vnd.github+json")
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                String body = response.body();
+                int idx = body.indexOf("\"body\":");
+                if (idx != -1) {
+                    int start = body.indexOf("\"", idx + 7) + 1;
+                    int end = body.indexOf("\"", start);
+                    String markdown = body.substring(start, end)
+                            .replace("\\r\\n", "\n")
+                            .replace("\\n", "\n")
+                            .replace("\\\"", "\"");
+                    Parser parser = Parser.builder().build();
+                    HtmlRenderer renderer = HtmlRenderer.builder().build();
+                    return renderer.render(parser.parse(markdown));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

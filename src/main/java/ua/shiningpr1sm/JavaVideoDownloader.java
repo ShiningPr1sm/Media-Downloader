@@ -10,10 +10,8 @@ import java.awt.event.FocusEvent;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -42,7 +40,9 @@ public class JavaVideoDownloader {
             e.printStackTrace();
         }
 
-        JFrame frame = new JFrame("Social Media Downloader");
+        String currentVer = ConfigManager.getInternalVersion();
+        JFrame frame = new JFrame();
+        frame.setTitle(String.format("Media Downloader  |  v%s", currentVer));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(550, 300);
@@ -54,8 +54,13 @@ public class JavaVideoDownloader {
         frame.setResizable(false);
 
         try {
-            Image icon = ImageIO.read(Objects.requireNonNull(JavaVideoDownloader.class.getResource("/project_icon.png")));
-            frame.setIconImage(icon);
+            var resource = JavaVideoDownloader.class.getResource("/project_icon.png");
+            if (resource != null) {
+                Image icon = ImageIO.read(resource);
+                frame.setIconImage(icon);
+            } else {
+                System.err.println("Icon resource not found: /project_icon.png");
+            }
         } catch (IOException e) {
             System.err.println("Error loading icon: " + e.getMessage());
             e.printStackTrace();
@@ -142,7 +147,10 @@ public class JavaVideoDownloader {
             String input = textArea.getText().trim();
             System.out.println("Download button clicked. Input: '" + input + "'");
             if (input.isEmpty() || input.equals(textarea_placeholder)) {
-                JOptionPane.showMessageDialog(frame, "Please enter at least one video URL!");
+                JOptionPane.showMessageDialog(frame,
+                        "Please enter at least one video URL!",
+                        "Empty Input",
+                        JOptionPane.WARNING_MESSAGE);
                 System.out.println("No URL entered.");
                 return;
             }
