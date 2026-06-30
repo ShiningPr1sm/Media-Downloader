@@ -29,5 +29,5 @@ Thumbs.db
 *.bak
 
 # Ignore ffmpeg binaries if you keep them locally
-src/main/resources/ffmpeg/bin/
-src/main/resources/yt-dlp.exe
+src/resources/ffmpeg/bin/
+src/resources/yt-dlp.exe
