@@ -32,7 +32,6 @@ public class JavaVideoDownloader {
     private static final String FFMPEG_ZIP_URL = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip";
 
     public JavaVideoDownloader() {
-        System.out.println("Starting Social Media Video Downloader application.");
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException e) {
@@ -103,13 +102,17 @@ public class JavaVideoDownloader {
         JProgressBar progressBar = new JProgressBar(0, 100);
         progressBar.setStringPainted(true);
         progressBar.setPreferredSize(new Dimension(500, 20));
-        JPanel progressPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        progressPanel.add(progressBar);
+
+        JPanel progressPanel = new JPanel(new BorderLayout());
+        progressPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
+        progressPanel.add(progressBar, BorderLayout.CENTER);
         frame.add(progressPanel, BorderLayout.CENTER);
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        final int ROW_HEIGHT = 30;
 
         String[] formats = {
                 "Video + Audio",
@@ -118,10 +121,12 @@ public class JavaVideoDownloader {
         };
 
         JComboBox<String> formatBox = new JComboBox<>(formats);
-        formatBox.setMaximumSize(new Dimension(200, 25));
+        formatBox.setMaximumSize(new Dimension(200, ROW_HEIGHT));
+        formatBox.setPreferredSize(new Dimension(200, ROW_HEIGHT));
 
         JButton downloadButton = new JButton("Download");
-        downloadButton.setPreferredSize(new Dimension(320, 30));
+        downloadButton.setPreferredSize(new Dimension(320, ROW_HEIGHT));
+        downloadButton.setMaximumSize(new Dimension(320, ROW_HEIGHT));
 
         ImageIcon thumbIcon = new ImageIcon(
                 Objects.requireNonNull(JavaVideoDownloader.class.getResource("/thumbnail_icon.png"))
@@ -129,9 +134,18 @@ public class JavaVideoDownloader {
         Image scaled = thumbIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         JButton thumbnailButton = new JButton(new ImageIcon(scaled));
         thumbnailButton.setToolTipText("Download thumbnail");
+        thumbnailButton.setPreferredSize(new Dimension(ROW_HEIGHT, ROW_HEIGHT));
+        thumbnailButton.setMaximumSize(new Dimension(ROW_HEIGHT, ROW_HEIGHT));
 
         String[] browsers = {"None", "Firefox", "Chrome", "Edge", "Opera", "Brave"};
         JComboBox<String> browserComboBox = new JComboBox<>(browsers);
+        browserComboBox.setMaximumSize(new Dimension(120, ROW_HEIGHT));
+        browserComboBox.setPreferredSize(new Dimension(120, ROW_HEIGHT));
+
+        formatBox.setAlignmentY(Component.CENTER_ALIGNMENT);
+        downloadButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+        thumbnailButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+        browserComboBox.setAlignmentY(Component.CENTER_ALIGNMENT);
 
         bottomPanel.add(formatBox);
         bottomPanel.add(Box.createHorizontalStrut(10));
@@ -145,13 +159,11 @@ public class JavaVideoDownloader {
 
         downloadButton.addActionListener(e -> {
             String input = textArea.getText().trim();
-            System.out.println("Download button clicked. Input: '" + input + "'");
             if (input.isEmpty() || input.equals(textarea_placeholder)) {
                 JOptionPane.showMessageDialog(frame,
                         "Please enter at least one video URL!",
-                        "Empty Input",
+                        "Empty input",
                         JOptionPane.WARNING_MESSAGE);
-                System.out.println("No URL entered.");
                 return;
             }
 
@@ -178,7 +190,7 @@ public class JavaVideoDownloader {
                     checkAndDownloadYTDLP();
                     checkAndDownloadFFMPEG();
                     String selectedFormat = (String) formatBox.getSelectedItem();
-                    String browser = browserComboBox.getSelectedItem().toString().toLowerCase();
+                    String browser = Objects.requireNonNull(browserComboBox.getSelectedItem()).toString().toLowerCase();
                     System.out.println("Selected format: " + selectedFormat + ", Browser for cookies: " + browser);
 
                     for (int i = 0; i < videoUrls.size(); i++) {
@@ -293,7 +305,10 @@ public class JavaVideoDownloader {
         thumbnailButton.addActionListener(e -> {
             String input = textArea.getText().trim();
             if (input.isEmpty() || input.equals(textarea_placeholder)) {
-                JOptionPane.showMessageDialog(frame, "Please enter at least one video URL!");
+                JOptionPane.showMessageDialog(frame,
+                        "Please enter at least one video URL!",
+                        "Empty input",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
