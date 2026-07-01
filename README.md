@@ -2,9 +2,9 @@
   
 # 🎥 / Media Downloader
 
-[![GitHub stars](https://img.shields.io/github/stars/ShiningPr1sm/media-downloader?style=flat-square)](https://github.com/ShiningPr1sm/media-downloader/stargazers)
-[![GitHub last commit](https://img.shields.io/github/last-commit/ShiningPr1sm/media-downloader?label=last%20update&style=flat-square)](https://github.com/ShiningPr1sm/media-downloader/commits)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/ShiningPr1sm/media-downloader?label=version&style=flat-square)](https://github.com/ShiningPr1sm/media-downloader/releases)
+[![GitHub stars](https://img.shields.io/github/stars/ShiningPr1sm/Media-Downloader?style=flat-square)](https://github.com/ShiningPr1sm/Media-Downloader/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/ShiningPr1sm/Media-Downloader?label=last%20update&style=flat-square)](https://github.com/ShiningPr1sm/Media-Downloader/commits)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/ShiningPr1sm/Media-Downloader?label=version&style=flat-square)](https://github.com/ShiningPr1sm/Media-Downloader/releases)
 
 <img width="800" height="450" alt="MediaDownloader" src="https://github.com/user-attachments/assets/7c5bed3c-5917-405d-bf84-2243efd7aa1a" />
 </div>
