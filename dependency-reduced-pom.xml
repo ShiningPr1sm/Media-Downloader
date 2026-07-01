@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.example</groupId>
   <artifactId>MediaDownloader</artifactId>
-  <version>3.0.2</version>
+  <version>3.0.3</version>
   <build>
     <resources>
       <resource>
