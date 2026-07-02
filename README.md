@@ -13,6 +13,10 @@
 
 ---
 
+> [!WARNING]
+> Version 3.0.2 of the program is unstable. 
+> It may not have full access to all of the program's dependencies. If you encounter an error that prevents version 3.0.2 from running, please install the latest [release](https://github.com/ShiningPr1sm/media-downloader/releases).
+
 ## Overview
 This program allows you to download videos from a wide variety of sources, including YouTube, YouTube Music, Instagram, TikTok, X, and more. All videos are downloaded using the third-party utility yt-dlp, and I’m grateful to the developer for providing this capability. The program also uses FFmpeg under the hood, which allows it to download the best video and audio tracks and combine them into a single file.
 
