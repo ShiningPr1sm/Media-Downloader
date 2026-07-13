@@ -24,12 +24,16 @@ This program allows you to download videos from a wide variety of sources, inclu
 * **Downloading**: Fast downloading of video/thumbnail;
 * **Bypassing restrictions**: The program may use your browser's cookies to bypass certain restrictions (such as age restrictions on YouTube, private Instagram accounts — if you're following them and so on).
 
+## Getting Started
+
 ### Prerequisites
 * Windows 7/10/11;
 
 ### Download
-* You can download a `.jar` or `.exe` from [Releases](https://github.com/ShiningPr1sm/media-downloader/releases);
+* You can download a `.jar` file or `.exe` from [Releases](https://github.com/ShiningPr1sm/media-downloader/releases);
 
 ### Acknowledgments
+A big thank you to my friend "FerdinandFoster" for conducting numerous tests and finding bugs in this program. Thanks to this, we’ve ended up with a fairly robust system with a minimal number of errors.
+
 If you find a bug, error, or typo, please submit a report in the [Issues](https://github.com/ShiningPr1sm/media-downloader/issues) section. 
 Thank you very much for using this program! <3
